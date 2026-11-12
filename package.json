@@ -1,0 +1,22 @@
+{
+  "name": "voxradar",
+  "version": "0.1.0",
+  "description": "Prototipo navegable de VoxRadar: radar visual de quién habla en reuniones grupales para personas con hipoacusia.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node --test tests/unit/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage --test-coverage-include=src/core/** --test-coverage-include=src/app/store.js --test-coverage-include=src/app/persistence.js --test-coverage-include=src/app/router.js --test-coverage-lines=80 tests/unit/*.test.js",
+    "test:e2e": "node --test --test-concurrency=1 tests/e2e/*.test.js",
+    "screenshots": "node scripts/screenshots.js",
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "UNLICENSED"
+}
