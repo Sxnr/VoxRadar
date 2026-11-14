@@ -35,3 +35,8 @@ export function formatClock(ms) {
 export function findUtterance(meeting, id) {
   return meeting.utterances.find((u) => u.id === id) ?? null;
 }
+
+export function meetingStats(meeting, t) {
+  const started = meeting.utterances.filter((u) => u.start <= t);
+  return { utterances: started.length, speakers: new Set(started.map((u) => u.speakerId)).size };
+}

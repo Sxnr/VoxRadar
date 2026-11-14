@@ -7,6 +7,7 @@ import {
   speakerLabel,
   directionLabel,
   sanitizeNames,
+  initialsOf,
 } from '../../src/core/speakers.js';
 
 const meeting = {
@@ -111,4 +112,20 @@ describe('directionLabel', () => {
       assert.equal(directionLabel(angle), expected);
     });
   }
+});
+
+describe('initialsOf', () => {
+  test('keeps the number of default labels', () => {
+    assert.equal(initialsOf('Persona 3'), 'P3');
+  });
+
+  test('uses up to two initials of custom names', () => {
+    assert.equal(initialsOf('Rosa'), 'R');
+    assert.equal(initialsOf('don luis pérez'), 'DL');
+  });
+
+  test('handles empty input', () => {
+    assert.equal(initialsOf(''), '?');
+    assert.equal(initialsOf(undefined), '?');
+  });
 });
