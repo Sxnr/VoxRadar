@@ -23,7 +23,7 @@ export function createCaptions() {
     if (key === lastKey) return;
     lastKey = key;
     if (captions.length === 0) {
-      replaceChildren(list, h('li', { className: 'caption caption-empty', text: 'Aún nadie ha hablado.' }));
+      replaceChildren(list, h('li', { className: 'caption caption-empty', text: 'Silencio en la mesa. Cuando alguien hable, sus palabras aparecerán aquí.' }));
       return;
     }
     replaceChildren(
@@ -32,7 +32,7 @@ export function createCaptions() {
         h(
           'li',
           { className: `caption spk-${hueOf(c.speakerId)}`, dataset: { live: String(c.live) } },
-          h('span', { className: 'caption-who' }, h('span', { className: 'chip-dot', 'aria-hidden': 'true' }), labelOf(c.speakerId)),
+          h('span', { className: 'caption-who' }, h('span', { className: 'chip-dot', 'aria-hidden': 'true' }), labelOf(c.speakerId), c.live ? h('span', { className: 'live-badge', text: 'En vivo' }) : null),
           h('p', { className: 'caption-text', text: c.text }),
         ),
       ),
