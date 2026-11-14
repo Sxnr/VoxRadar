@@ -58,3 +58,14 @@ export function directionLabel(angleDeg) {
   const index = Math.round(normalizeAngle(angleDeg) / SECTOR_DEG) % DIRECTIONS.length;
   return DIRECTIONS[index];
 }
+
+export function initialsOf(name) {
+  if (typeof name !== 'string' || name.trim() === '') return '?';
+  const words = name.trim().split(/\s+/);
+  const numbered = /^persona$/i.test(words[0]) && /^\d+$/.test(words[1] ?? '');
+  if (numbered) return `P${words[1]}`;
+  return words
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('');
+}

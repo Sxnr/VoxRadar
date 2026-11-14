@@ -35,7 +35,7 @@ Proyecto de la asignatura *Interacción Humano Computador* — Universidad Mayor
 | D5 | Texto ampliable hasta 200 % y modo de alto contraste | N3, N5 | WCAG 1.4.4; 1.4.3 | `src/ui/screens/settings.js`, `detail.js` |
 | D6 | Una sola acción para empezar, sin registro; ajustes opcionales | N6 | Heurísticas 7 y 8 | `src/ui/screens/home.js` |
 
-Además: tipografía [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/) (diseñada para baja visión), texto base de 18 px, objetivos táctiles de 48 px o más y anuncios para lectores de pantalla cuando cambia el hablante.
+Además: tipografía [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/) (diseñada para baja visión, incluida en `src/fonts` bajo licencia SIL OFL), texto base de 18 px, objetivos táctiles de 48 px o más y anuncios para lectores de pantalla cuando cambia el hablante.
 
 ## Usarla
 

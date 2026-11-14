@@ -6,14 +6,15 @@ import { icons } from '../icons.js';
 import { TURN } from '../../core/simulation.js';
 
 const COPY = {
-  [TURN.SPEAKING]: { text: 'Alguien está hablando', icon: icons.wave },
-  [TURN.FREE]: { text: 'Turno libre', icon: icons.check },
+  [TURN.SPEAKING]: { text: 'Alguien está hablando', hint: 'Espera tu momento', icon: icons.wave },
+  [TURN.FREE]: { text: 'Turno libre', hint: 'Puedes hablar', icon: icons.check },
 };
 
 export function createTurnIndicator({ onToggleAlert }) {
   const iconSlot = h('span', { className: 'turn-icon' });
   const label = h('span', { className: 'turn-text' });
-  const pill = h('div', { className: 'turn-pill', role: 'status' }, iconSlot, label);
+  const hint = h('span', { className: 'turn-hint' });
+  const pill = h('div', { className: 'turn-pill', role: 'status' }, iconSlot, h('span', { className: 'turn-copy' }, label, hint));
   const alertText = h('span', {});
   const alertButton = h(
     'button',
@@ -30,6 +31,7 @@ export function createTurnIndicator({ onToggleAlert }) {
       pill.dataset.turn = turn;
       replaceChildren(iconSlot, COPY[turn].icon());
       setText(label, COPY[turn].text);
+      setText(hint, COPY[turn].hint);
     }
     alertButton.setAttribute('aria-pressed', String(alertArmed));
     setText(alertText, alertArmed ? 'Te aviso en la pausa' : 'Avisarme en la pausa');

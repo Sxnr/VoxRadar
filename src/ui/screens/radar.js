@@ -15,7 +15,7 @@ import {
   isMeetingOver,
 } from '../../core/simulation.js';
 import { directionLabel } from '../../core/speakers.js';
-import { formatClock } from '../../core/history.js';
+import { formatClock, meetingStats } from '../../core/history.js';
 
 function createNowSpeaking() {
   const who = h('strong', { className: 'now-who' });
@@ -25,7 +25,7 @@ function createNowSpeaking() {
     element,
     update(primary, label) {
       element.dataset.empty = String(!primary);
-      setText(who, primary ? label : 'Nadie está hablando');
+      setText(who, primary ? label : 'Silencio en la mesa');
       setText(where, primary ? directionLabel(primary.angleDeg) : '');
     },
   };
@@ -47,11 +47,11 @@ function createPlayback(actions) {
   };
 }
 
-function createEndBanner(actions) {
+function createEndBanner(actions, stats) {
   return h(
     'div',
     { className: 'end-banner', role: 'status' },
-    h('p', { text: 'La reunión terminó.' }),
+    h('div', {}, h('p', { className: 'end-title', text: '¡La reunión terminó!' }), h('p', { className: 'end-stats', text: `Seguiste ${stats.utterances} intervenciones de ${stats.speakers} personas.` })),
     h('button', { type: 'button', className: 'btn btn-secondary', onClick: () => actions.restart() }, icons.restart(), 'Repetir demostración'),
   );
 }
@@ -99,7 +99,7 @@ export function renderRadar({ meeting, actions, navigate, labelOf, hueOf, announ
     const over = isMeetingOver(meeting, t);
     if (over !== lastOver) {
       lastOver = over;
-      replaceChildren(endSlot, over ? createEndBanner(actions) : null);
+      replaceChildren(endSlot, over ? createEndBanner(actions, meetingStats(meeting, t)) : null);
     }
   }
 
