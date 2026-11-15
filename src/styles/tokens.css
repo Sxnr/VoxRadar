@@ -1,4 +1,19 @@
 /* Tokens de diseño. Dirección: "instrumento de sonar sobre papel". */
+
+/* Atkinson Hyperlegible © Braille Institute, licencia SIL OFL 1.1 (src/fonts/OFL.txt) */
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/AtkinsonHyperlegible-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/AtkinsonHyperlegible-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
 :root {
   --scale: 1;
 

@@ -1,5 +1,5 @@
 /* Service worker: guarda la app para que funcione sin conexión (PWA). */
-const CACHE = 'voxradar-v1';
+const CACHE = 'voxradar-v2';
 
 const APP_SHELL = [
   './',
@@ -37,6 +37,9 @@ const APP_SHELL = [
   './src/styles/base.css',
   './src/styles/components.css',
   './src/styles/screens.css',
+  './src/core/greeting.js',
+  './src/fonts/AtkinsonHyperlegible-Regular.woff2',
+  './src/fonts/AtkinsonHyperlegible-Bold.woff2',
 ];
 
 self.addEventListener('install', (event) => {

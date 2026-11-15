@@ -5,7 +5,7 @@
 import { h } from '../dom.js';
 import { icons } from '../icons.js';
 import { createHeader } from '../components/header.js';
-import { missedGroups, formatClock } from '../../core/history.js';
+import { missedGroups, formatClock, MISSED_WINDOW_MS } from '../../core/history.js';
 import { directionLabel } from '../../core/speakers.js';
 
 function renderGroup(group, { meeting, state, labelOf, navigate }) {
@@ -39,12 +39,18 @@ export function renderMissed(ctx) {
   const groups = missedGroups(meeting, state.t);
   const body = groups.length
     ? h('ol', { className: 'missed-list' }, groups.map((g) => renderGroup(g, { ...ctx, state })))
-    : h('p', { className: 'card empty', text: 'Todavía no se ha dicho nada.' });
+    : h('p', { className: 'card empty', text: 'Todavía nadie ha dicho nada. Vuelve en un rato: aquí verás lo que se conversó.' });
+  const count = groups.reduce((n, g) => n + g.items.length, 0);
+  const people = new Set(groups.map((g) => g.speakerId)).size;
+  const summary = groups.length
+    ? h('p', { className: 'missed-summary' }, h('strong', { text: `${count} intervenciones` }), ` de ${people} ${people === 1 ? 'persona' : 'personas'}. Toca una frase para leerla en grande.`)
+    : null;
   const back = h('button', { type: 'button', className: 'btn btn-primary btn-xl', onClick: () => navigate('/radar') }, icons.back(), 'Volver al radar');
   const element = h(
     'div',
     { className: 'screen screen-missed' },
-    createHeader({ title: 'Lo que te perdiste', subtitle: `Últimos 2 minutos, hasta el ${formatClock(state.t)}`, onBack: () => navigate('/radar'), backLabel: 'Radar' }),
+    createHeader({ title: 'Te ponemos al día', subtitle: `Lo que se dijo en los últimos ${MISSED_WINDOW_MS / 60000} minutos (hasta el ${formatClock(state.t)})`, onBack: () => navigate('/radar'), backLabel: 'Radar' }),
+    summary,
     body,
     h('div', { className: 'dock' }, back),
   );

@@ -13,9 +13,10 @@ export function renderPauseAlert({ onDismiss }) {
     h(
       'div',
       { className: 'overlay-card' },
-      h('span', { className: 'overlay-icon' }, icons.check()),
+      h('span', { className: 'overlay-icon' }, h('span', { className: 'overlay-ring', 'aria-hidden': 'true' }), icons.check()),
+      h('p', { className: 'overlay-kicker', text: 'Es tu momento' }),
       h('h2', { id: 'pause-title', className: 'overlay-title', text: 'Turno libre' }),
-      h('p', { id: 'pause-desc', className: 'overlay-text', text: 'Ahora nadie está hablando. Puedes tomar la palabra.' }),
+      h('p', { id: 'pause-desc', className: 'overlay-text', text: 'Ahora nadie está hablando. Puedes tomar la palabra sin interrumpir a nadie.' }),
       ok,
     ),
   );

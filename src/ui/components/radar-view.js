@@ -4,7 +4,7 @@
  */
 import { s, setText } from '../dom.js';
 import { polarToPoint } from '../../core/geometry.js';
-import { directionLabel } from '../../core/speakers.js';
+import { directionLabel, initialsOf } from '../../core/speakers.js';
 
 const RADIUS = 110;
 const SPEAKER_RADIUS = 80;
@@ -25,6 +25,7 @@ function buildBackdrop() {
     ...RINGS.map((r) => s('circle', { className: 'radar-ring', r })),
     s('line', { className: 'radar-axis', x1: 0, y1: -RADIUS, x2: 0, y2: RADIUS }),
     s('line', { className: 'radar-axis', x1: -RADIUS, y1: 0, x2: RADIUS, y2: 0 }),
+    s('g', { className: 'radar-sweep' }, s('line', { className: 'radar-sweep-line', x1: 0, y1: 0, x2: 0, y2: -RADIUS })),
     s('text', { className: 'radar-front', x: 0, y: -RADIUS + 14, 'text-anchor': 'middle', text: 'FRENTE' }),
   );
 }
@@ -43,6 +44,7 @@ function buildSpeaker(speaker, onSelect) {
   const labelBelow = y < 60;
   const label = s('text', { className: 'spk-label', y: labelBelow ? 30 : -24, 'text-anchor': 'middle' });
   const status = s('text', { className: 'spk-status', y: labelBelow ? 43 : -37, 'text-anchor': 'middle' });
+  const initials = s('text', { className: 'spk-initials', y: 3.5, 'text-anchor': 'middle' });
   const group = s(
     'g',
     {
@@ -56,6 +58,7 @@ function buildSpeaker(speaker, onSelect) {
     s('circle', { className: 'spk-wave spk-wave-2', r: 16 }),
     s('circle', { className: 'spk-hit', r: 24 }),
     s('circle', { className: 'spk-dot', r: 10 }),
+    initials,
     label,
     status,
   );
@@ -67,7 +70,7 @@ function buildSpeaker(speaker, onSelect) {
       select();
     }
   });
-  return { group, label, status };
+  return { group, label, status, initials };
 }
 
 function speakerRole(id, primaryId, activeIds) {
@@ -97,10 +100,11 @@ export function createRadarView({ meeting, onSelect }) {
   function update({ primaryId, activeIds, labelOf }) {
     const primary = meeting.speakers.find((sp) => sp.id === primaryId);
     wedge.setAttribute('d', primary ? wedgePath(primary.angleDeg) : '');
-    nodes.forEach(({ speaker, group, label, status }) => {
+    nodes.forEach(({ speaker, group, label, status, initials }) => {
       const role = speakerRole(speaker.id, primaryId, activeIds);
       group.dataset.role = role;
       setText(label, labelOf(speaker.id));
+      setText(initials, initialsOf(labelOf(speaker.id)));
       setText(status, STATUS_TEXT[role]);
       const speaking = role === 'idle' ? 'en silencio' : 'hablando';
       group.setAttribute(

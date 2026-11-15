@@ -43,7 +43,7 @@ export function renderRename({ meeting, store, actions, navigate, labelOf, param
     h('p', { className: 'form-context' }, h('span', { className: `chip spk-${speaker.hue}` }, h('span', { className: 'chip-dot', 'aria-hidden': 'true' }), labelOf(state, speaker.id)), ` · ${directionLabel(speaker.angleDeg)}`),
     h('label', { className: 'field-label', for: 'speaker-name', text: '¿Quién es?' }),
     input,
-    h('p', { id: 'name-help', className: 'field-help', text: `Hasta ${MAX_NAME_LENGTH} caracteres. Solo se guarda en este teléfono.` }),
+    h('p', { id: 'name-help', className: 'field-help', text: `Así lo reconocerás en el radar. Hasta ${MAX_NAME_LENGTH} caracteres; solo se guarda en este teléfono.` }),
     error,
     h('div', { className: 'form-actions' }, h('button', { type: 'submit', className: 'btn btn-primary' }, icons.check(), 'Guardar'), h('button', { type: 'button', className: 'btn btn-ghost', onClick: () => navigate('/radar') }, 'Cancelar')),
   );

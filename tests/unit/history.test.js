@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { MISSED_WINDOW_MS, missedGroups, formatClock, findUtterance } from '../../src/core/history.js';
+import { MISSED_WINDOW_MS, missedGroups, formatClock, findUtterance, meetingStats } from '../../src/core/history.js';
 
 const meeting = {
   durationMs: 300000,
@@ -77,5 +77,15 @@ describe('findUtterance', () => {
 
   test('returns null for unknown ids', () => {
     assert.equal(findUtterance(meeting, 'nope'), null);
+  });
+});
+
+describe('meetingStats', () => {
+  test('counts started utterances and distinct speakers', () => {
+    assert.deepEqual(meetingStats(meeting, 136500), { utterances: 4, speakers: 2 });
+  });
+
+  test('is zero before anyone speaks', () => {
+    assert.deepEqual(meetingStats(meeting, -1), { utterances: 0, speakers: 0 });
   });
 });
